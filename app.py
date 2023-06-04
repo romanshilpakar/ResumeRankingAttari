@@ -57,13 +57,22 @@ def index():
     
 @app.route('/HR', methods=['GET', 'POST'])
 def viewdetails():      
-    all_results = resumeFetchedData.find({}, {"NAME": 1, "SKILLS": 1, "_id": 0})
+    all_results = resumeFetchedData.find({}, {"NAME": 1, "SKILLS": 1, "COMPANIES WORKED AT":1,"WORKED AS": 1,"YEARS OF EXPERIENCE":1, "CERTIFICATION": 1,"UNIVERSITY":1,"DEGREE": 1,"GRADUATION YEAR": 1,"_id": 0})
 
     results_list = []
     for result in all_results:
         name = result.get("NAME", "")
         skills = result.get("SKILLS", [])
-        results_list.append({"name": name, "skills": skills})
+        certification = result.get("CERTIFICATION", [])
+        company_name = result.get("COMPANIES WORKED AT", [])
+        years_of_experience = result.get("YEARS OF EXPERIENCE", [])
+        role = result.get("WORKED AS", [])
+        university = result.get("UNIVERSITY", [])
+        degree = result.get("DEGREE", [])
+        graduation_year = result.get("GRADUATION YEAR", [])
+        
+
+        results_list.append({"name": name, "skills": skills,"company_name":company_name,"role": role,"years_of_experience":years_of_experience,"certification":certification,"university":university,"degree":degree,"graduation_year":graduation_year})
         
     return render_template("CompanyDashboard.html", data=results_list)
 
@@ -72,51 +81,7 @@ def viewdetails():
 @app.route('/test')
 def test():
     return "Connection Successful"
-
-
-
-# @app.route("/uploadResume", methods=['POST'])
-# def uploadResume():
-#     file = request.files['resume']
-#     filename = secure_filename(file.filename)
-
-#     if file and allowedExtension(file.filename):
-#         existing_resume = resumeFetchedData.find_one({'ResumeTitle': filename})
-#         if existing_resume:
-#             resumeFetchedData.delete_one({'ResumeTitle': filename})
-#             print("Existing Deleted")
-
-#         ResumeText = extract_text_from_pdf(file)
-#         label_list=[]
-#         text_list = []
-#         dic = {}
-
-#         doc = nlp(ResumeText) 
-#         for ent in doc.ents:
-#             label_list.append(ent.label_)
-#             text_list.append(ent.text) 
-#         print("Model work done")
-#         for i in range(len(label_list)):
-#             if label_list[i] in dic:
-#                 # if the key already exists, append the new value to the list of values
-#                 dic[label_list[i]].append(text_list[i])
-#             else:
-#                 # if the key does not exist, create a new key-value pair
-#                 dic[label_list[i]] = [text_list[i]]
-        
-#         # print(dic)
-#         dic["ResumeTitle"] = filename
-#         result = None  
-#         result = resumeFetchedData.insert_one(dic)
-#         # resumeFetchedData.insert_one({'filename': filename, 'ResumeText': ResumeText})            
-#         if result == None:
-#             return render_template("index.html",errorMsg="Problem in Resume Data Storage")  
-#         else:
-#             return redirect(url_for('viewdetails'))
-
-#     else:
-#         return render_template("index.html",errorMsg="Document Type Not Allowed")
-    
+   
 
 @app.route("/uploadResume", methods=['POST'])
 def uploadResume():

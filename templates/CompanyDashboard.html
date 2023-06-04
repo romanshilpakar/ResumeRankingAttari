@@ -1,6 +1,39 @@
-{% extends "base.html" %} {% block title %}HR Dashboard{% endblock %} {% block
-Addnav %}
-{% endblock %} {% block content %}
+{% extends "base.html" %} {% block title %}HR Dashboard{% endblock %} 
+{% block content %}
+
+<div class="container">
+  <nav
+    class="navbar navbar-expand-lg navbar-light bg-light"
+    style="z-index: 10"
+  >
+    <span class="navbar-brand mb-0 h1" href="#">Resume Ranker</span>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" style="z-index: 10" href="/"
+            >Home <span class="sr-only">(current)</span></a
+          >
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
@@ -41,6 +74,14 @@ Addnav %}
               <th class="text-center">No</th>
               <th class="text-center">Name</th>
               <th class="text-center">Skills</th>
+              <th class="text-center">Company Name</th>
+              <th class="text-center">Role</th>
+              <th class="text-center">Years of Experience</th>      
+              <th class="text-center">Certification</th>
+              <th class="text-center">University</th>
+              <th class="text-center">Degree</th>
+              <th class="text-center">Graduation Year</th>
+
             </tr>
           </thead>
           <tbody>
@@ -49,6 +90,15 @@ Addnav %}
               <td class="text-center">{{ loop.index }}</td>
               <td class="text-center">{{ item.name | join(", ") }}</td>
               <td class="text-center">{{ item.skills | join(", ") }}</td>
+              <td class="text-center">{{ item.company_name | join(", ") }}</td>
+              <td class="text-center">{{ item.role | join(", ") }}</td>
+              <td class="text-center">{{ item.years_of_experience | join(", ") }}</td>         
+              <td class="text-center">{{ item.certification | join(", ") }}</td>
+              <td class="text-center">{{ item.university | join(", ") }}</td>
+              <td class="text-center">{{ item.degree | join(", ") }}</td>
+              <td class="text-center">{{ item.graduation_year | join(", ") }}</td>
+              
+                        
             </tr>
             {% endfor %}
           </tbody>
