@@ -30,82 +30,111 @@
   </nav>
 </div>
 
-
-
-
-
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 <script>
   var $j = jQuery.noConflict();
 </script>
+
+
 <style>
-  @media screen and (max-width: 560px) {
-    #categoryInput {
-      width: 100%;
-    }
-    input.sBto {
-      width: 100%;
-      height: 20%;
-      margin-bottom: 20px;
-    }
+  .vertical-text {
+    writing-mode: tb-rl;
+    white-space: nowrap;
+    border: none;
+    padding: 5px;
+    font-size: 14px;
+    line-height: 1;
+    width: 1em;
+    text-align: center;
   }
-  @media screen and (min-width: 560px) {
-    input.sBto {
-      width: 60%;
-      margin-left: 20%;
-      height: 30%;
-      margin-bottom: 50px;
-    }
+
+  .horizontal-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .horizontal-table td {
+    padding: 4px;
+    border: 1px solid black;
   }
 </style>
 
 
-<div class="contain-fluid">
+
+<div class="container-fluid">
   <div class="container">
-    <div class="row">
-      <h2>{{ errorMsg }}</h2>
-    </div>
-    <div class="row">
-      <div class="col-xs-12 table-responsive-sm">
-        <table class="table table-bordered">
-          <thead>
+        {% for person in data %}         
+        <table class="table horizontal-table">
+          <tbody>
             <tr>
-              <th class="text-center">No</th>
-              <th class="text-center">Name</th>
-              <th class="text-center">Skills</th>
-              <th class="text-center">Company Name</th>
-              <th class="text-center">Role</th>
-              <th class="text-center">Years of Experience</th>      
-              <th class="text-center">Certification</th>
-              <th class="text-center">University</th>
-              <th class="text-center">Degree</th>
-              <th class="text-center">Graduation Year</th>
+              <td class="vertical-text " rowspan="3">Personal Information</td>
+
+              <td>Name</td>
+              <td>{{ person.name | join(", ") }}</td>
+            </tr>
+            <tr>
+              <td>Phone Number</td>
+              <td>{{ person.number | join(", ") }}</td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>{{ person.email | join(", ") }}</td>
+            </tr>
+            <tr>
+              <td class="vertical-text" rowspan="3">Experience</td>
+              <td>Company Name</td>
+              {% for company in person.company_name %}
+                <td>{{ company }}</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <td>Role</td>
+              {% for r in person.role %}
+                <td>{{ r }}</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <td>Years of Experience</td>
+              {% for exp in person.years_of_experience %}
+                <td>{{ exp }}</td>
+              {% endfor %}
+            </tr>
+            
+            <tr>
+              <td class="vertical-text" rowspan="3">Education</td>
+              <td>University Name</td>
+              {% for uni in person.university %}
+                <td>{{ uni }}</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <td>Degree</td>
+              {% for deg in person.degree %}
+                <td>{{ deg }}</td>
+              {% endfor %}
+            </tr>
+            <tr>
+              <td>Graduation Year</td>
+              {% for year in person.graduation_year %}
+                <td>{{ year }}</td>
+              {% endfor %}
+            </tr>
+            
+            <tr>
+              <td class="vertical-text" rowspan="2">Additional Info</td>
+              <td>Certification</td>
+              <td>{{ person.certification | join(", ") }}</td>
+            </tr>
+            <tr>
+              <td>Skills</td>
+              <td>{{ person.skills | join(", ") }}</td>
 
             </tr>
-          </thead>
-          <tbody>
-            {% for item in data %}
-            <tr>
-              <td class="text-center">{{ loop.index }}</td>
-              <td class="text-center">{{ item.name | join(", ") }}</td>
-              <td class="text-center">{{ item.skills | join(", ") }}</td>
-              <td class="text-center">{{ item.company_name | join(", ") }}</td>
-              <td class="text-center">{{ item.role | join(", ") }}</td>
-              <td class="text-center">{{ item.years_of_experience | join(", ") }}</td>         
-              <td class="text-center">{{ item.certification | join(", ") }}</td>
-              <td class="text-center">{{ item.university | join(", ") }}</td>
-              <td class="text-center">{{ item.degree | join(", ") }}</td>
-              <td class="text-center">{{ item.graduation_year | join(", ") }}</td>
-              
-                        
-            </tr>
-            {% endfor %}
           </tbody>
         </table>
-      </div>
+        {% endfor %}
     </div>
-  </div>
 </div>
 
 
