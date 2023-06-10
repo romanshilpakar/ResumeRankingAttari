@@ -46,7 +46,7 @@ resume_uploaded = False
 
 ###Spacy model
 print("Loading Resume Parser model...")
-nlp = spacy.load('assets/ResumeModel/output/model-best')
+nlp = spacy.load('assets/ResumeModel2/output/model-best')
 print("Resune Parser model loaded")
 
 
@@ -57,22 +57,20 @@ def index():
     
 @app.route('/HR', methods=['GET', 'POST'])
 def viewdetails():      
-    all_results = resumeFetchedData.find({}, {"NAME": 1, "SKILLS": 1, "COMPANIES WORKED AT":1,"WORKED AS": 1,"YEARS OF EXPERIENCE":1, "CERTIFICATION": 1,"UNIVERSITY":1,"DEGREE": 1,"GRADUATION YEAR": 1,"_id": 0})
+    all_results = resumeFetchedData.find({}, {"PROFESSIONAL SKILLS": 1, "COMPANY NAME":1,"ROLE": 1,"YEARS OF EXPERIENCE":1, "CERTIFICATE": 1,"EDUCATION":1,"DEGREE": 1,"_id": 0})
 
     results_list = []
     for result in all_results:
-        name = result.get("NAME", "")
-        skills = result.get("SKILLS", [])
-        certification = result.get("CERTIFICATION", [])
-        company_name = result.get("COMPANIES WORKED AT", [])
+        skills = result.get("PROFESSIONAL SKILLS", [])
+        company_name = result.get("COMPANY NAME", [])
+        role = result.get("ROLE", [])
         years_of_experience = result.get("YEARS OF EXPERIENCE", [])
-        role = result.get("WORKED AS", [])
-        university = result.get("UNIVERSITY", [])
+        certification = result.get("CERTIFICATE", [])             
+        university = result.get("EDUCATION", [])
         degree = result.get("DEGREE", [])
-        graduation_year = result.get("GRADUATION YEAR", [])
-        
+        graduation_year = result.get("GRADUATION YEAR", []) 
 
-        results_list.append({"name": name, "skills": skills,"company_name":company_name,"role": role,"years_of_experience":years_of_experience,"certification":certification,"university":university,"degree":degree,"graduation_year":graduation_year})
+        results_list.append({"skills": skills,"company_name":company_name,"role": role,"years_of_experience":years_of_experience,"certification":certification,"university":university,"degree":degree,"graduation_year":graduation_year})
         
     return render_template("CompanyDashboard.html", data=results_list)
 
@@ -115,6 +113,7 @@ def uploadResume():
                     dic[label_list[i]] = [text_list[i]]
             
             dic["ResumeTitle"] = filename
+            # print(dic)
             result = resumeFetchedData.insert_one(dic)
 
             if result == None:

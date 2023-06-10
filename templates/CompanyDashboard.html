@@ -48,10 +48,14 @@
     width: 1em;
     text-align: center;
   }
+  .table-container {
+    margin-bottom: 40px;
+  }
 
   .horizontal-table {
     width: 100%;
     border-collapse: collapse;
+    margin-bottom: 0
   }
 
   .horizontal-table td {
@@ -61,26 +65,29 @@
 </style>
 
 
-
 <div class="container-fluid">
-  <div class="container">
-        {% for person in data %}         
+  <div class="container">   
+    {% for person in data %}  
+    <div class="table-container">   
         <table class="table horizontal-table">
           <tbody>
             <tr>
               <td class="vertical-text " rowspan="3">Personal Information</td>
-
               <td>Name</td>
-              <td>{{ person.name | join(", ") }}</td>
+              <td> need to work </td>
             </tr>
             <tr>
               <td>Phone Number</td>
-              <td>{{ person.number | join(", ") }}</td>
+              <td> need to work </td>
             </tr>
             <tr>
               <td>Email</td>
-              <td>{{ person.email | join(", ") }}</td>
-            </tr>
+              <td>need to work</td>
+            </tr>                    
+          </tbody>
+        </table>
+        <table class="table horizontal-table">
+          <tbody>
             <tr>
               <td class="vertical-text" rowspan="3">Experience</td>
               <td>Company Name</td>
@@ -93,14 +100,19 @@
               {% for r in person.role %}
                 <td>{{ r }}</td>
               {% endfor %}
+              
             </tr>
             <tr>
               <td>Years of Experience</td>
               {% for exp in person.years_of_experience %}
                 <td>{{ exp }}</td>
               {% endfor %}
-            </tr>
-            
+            </tr>                     
+          </tbody>
+        </table>
+
+        <table class="table horizontal-table">
+          <tbody>
             <tr>
               <td class="vertical-text" rowspan="3">Education</td>
               <td>University Name</td>
@@ -119,23 +131,35 @@
               {% for year in person.graduation_year %}
                 <td>{{ year }}</td>
               {% endfor %}
-            </tr>
-            
+            </tr>                 
+          </tbody>
+        </table>
+
+        <table class="table horizontal-table">
+          <tbody>
             <tr>
               <td class="vertical-text" rowspan="2">Additional Info</td>
               <td>Certification</td>
+              <!-- {% for certificate in person.certification %}
+                <td>{{ certificate }}</td>
+              {% endfor %} -->
               <td>{{ person.certification | join(", ") }}</td>
             </tr>
             <tr>
               <td>Skills</td>
+              <!-- {% for skill in person.skills %}
+                <td>{{ skill }}</td>
+              {% endfor %} -->
               <td>{{ person.skills | join(", ") }}</td>
-
-            </tr>
+            </tr>                                    
           </tbody>
         </table>
+      </div>
         {% endfor %}
     </div>
 </div>
+
+
 
 
 {% endblock %}
